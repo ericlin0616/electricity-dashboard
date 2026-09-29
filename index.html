@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026 年 9 月側臥室用電儀表板</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--card:#1c2333;--border:#334155;--text:#f8fafc;--muted:#94a3b8;
+--teal:#2dd4bf;--coral:#fb7185;--purple:#c084fc;--gold:#fbbf24;--cyan:#22d3ee;--orange:#fb923c;--lime:#a3e635;--pink:#f472b6;
+--font:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC","Noto Sans CJK TC","Noto Serif CJK TC",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:radial-gradient(1100px 600px at 0% -10%,#1e1b4b 0%,transparent 55%),radial-gradient(900px 500px at 100% 0%,#042f2e 0%,transparent 50%),var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:18px 18px 48px}
+header{padding:10px 0 16px;border-bottom:1px solid var(--border);margin-bottom:14px}
+h1{font-size:clamp(1.4rem,3.2vw,2rem);background:linear-gradient(90deg,var(--gold),var(--coral),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.meta{color:var(--muted);font-size:.92rem;margin-top:4px}
+.meta b{color:var(--cyan);font-weight:600}
+.toolbar{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:rgba(13,17,23,.88);backdrop-filter:blur(8px);padding:10px 0;margin-bottom:12px;border-bottom:1px solid #1f2937}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+.seg button{background:transparent;color:var(--muted);border:0;padding:6px 14px;font:inherit;font-size:.9rem;cursor:pointer}
+.seg button.on{background:linear-gradient(90deg,#7c3aed,#db2777);color:#fff}
+.legend-badges{display:flex;flex-wrap:wrap;gap:6px;font-size:.8rem;color:var(--muted);align-items:center}
+.badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.75rem;font-weight:700;white-space:nowrap;border:1px solid transparent}
+.b-meas{background:#064e3b;color:#6ee7b7;border-color:#10b981}
+.b-est{background:repeating-linear-gradient(45deg,#7c2d12,#7c2d12 4px,#9a3412 4px,#9a3412 8px);color:#fed7aa;border-color:var(--orange)}
+.b-approx{background:#083344;color:#67e8f9;border-color:var(--cyan)}
+.b-norec{background:#1f2937;color:#cbd5e1;border-color:#64748b}
+.b-clamp{background:#500724;color:#f9a8d4;border-color:var(--pink)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:16px}
+.card{background:linear-gradient(160deg,var(--card),#111827);border:1px solid var(--border);border-left:5px solid var(--c,var(--gold));border-radius:14px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.card .t{color:var(--muted);font-size:.82rem}
+.card .v{font-size:1.45rem;font-weight:800;color:var(--c,var(--gold));line-height:1.3;margin:2px 0}
+.card .v small{font-size:.95rem;font-weight:700}
+.card .s{font-size:.78rem;color:#cbd5e1}
+.card select{background:#0f172a;color:var(--text);border:1px solid var(--border);border-radius:6px;font:inherit;font-size:.78rem;padding:1px 4px;margin-top:4px;max-width:100%}
+section.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:16px}
+section.panel h2{font-size:1.1rem;margin-bottom:8px;color:var(--text)}
+section.panel h2 .sub{font-size:.8rem;color:var(--muted);font-weight:400;margin-left:8px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:16px}
+.chart{width:100%;height:380px}
+.chart.tall{height:470px}
+.analysis ul{padding-left:1.2em}
+.analysis li{margin:5px 0;font-size:.95rem}
+.analysis li b{color:var(--gold)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{border-bottom:1px solid #243044;padding:6px 8px;text-align:right;white-space:nowrap}
+th{color:var(--gold);background:#1e293b;position:sticky;top:0}
+td.l,th.l{text-align:left}
+td.note{white-space:normal;min-width:260px;color:#cbd5e1;text-align:left}
+tr.est td{background:rgba(251,146,60,.07)}
+tr.approx td{background:rgba(34,211,238,.07)}
+tr.total td{background:#312e81;color:var(--gold);font-weight:800}
+#statsTbl td.lab{text-align:left;color:#cbd5e1}
+#statsTbl th.grp-room{color:var(--gold)} #statsTbl th.grp-plug{color:var(--teal)} #statsTbl th.grp-res{color:var(--coral)}
+#statsTbl td.act{background:rgba(163,230,53,.05)}
+#statsTbl td.dim{color:#64748b}
+#recTbl th{cursor:pointer;user-select:none}
+#recTbl th:hover{color:#fde68a}
+#recTbl th .arr{color:var(--muted);font-size:.7rem;margin-left:3px}
+.btn{background:linear-gradient(90deg,#0d9488,#0891b2);color:#fff;border:0;border-radius:8px;padding:6px 14px;font:inherit;font-size:.88rem;cursor:pointer;font-weight:700}
+.btn:hover{filter:brightness(1.15)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:8px}
+.fine{font-size:.8rem;color:var(--muted);margin-top:8px}
+.fine li{margin-left:1.2em}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:20px}
+.teal{color:var(--teal)} .coral{color:var(--coral)} .gold{color:var(--gold)} .purple{color:var(--purple)} .cyan{color:var(--cyan)}
+@media (max-width:600px){.grid2{grid-template-columns:1fr}.wrap{padding:10px 10px 36px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card{padding:9px 10px}.card .v{font-size:1.1rem}.card .v small{font-size:.8rem}.chart{height:320px}.chart.tall{height:400px}section.panel{padding:10px}.legend-badges{font-size:.72rem}th,td{padding:5px 6px}table{font-size:.8rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>2026 年 9 月・側臥室用電紀錄儀表板</h1>
+  <div class="meta">統計期間 <b>8/31–9/29（30 天）</b>｜電表 <b>6986.7</b>（8/30 基準）→ <b>7067.8</b>（9/30 01:16 讀數，視為 9/29 結束）｜費率 <b>NT$5／度</b>｜<b>無冷氣</b>；殘差＝熱水器＋其他小電器</div>
+</header>
+
+<div class="toolbar">
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <span style="color:var(--muted);font-size:.88rem">統計範圍：</span>
+    <div class="seg" id="scopeSeg"><button data-s="all" class="on">全部天數</button><button data-s="actual">僅實測日</button></div>
+  </div>
+  <div class="legend-badges">
+    <span class="badge b-meas">實測</span><span class="badge b-est">估算（均分）</span><span class="badge b-approx">約略（中午讀數）</span><span class="badge b-norec">插頭未記錄</span><span class="badge b-clamp">殘差記 0</span>
+  </div>
+</div>
+
+<div class="cards" id="cards"></div>
+
+<section class="panel analysis">
+  <h2>自動分析摘要<span class="sub">依資料即時計算</span></h2>
+  <ul id="analysis"></ul>
+</section>
+
+<section class="panel">
+  <h2>統計參數<span class="sub">標準差採「樣本標準差」（n−1）；百分位數採線性內插（同 Excel PERCENTILE.INC）</span></h2>
+  <div class="tbl-wrap"><table id="statsTbl"></table></div>
+  <ul class="fine">
+    <li><b>僅實測日</b>：房間＝電表逐日實拍日（排除 9/3–9/6、9/23–9/28 均分估算日與 9/29 約略值）；插頭＝App 有記錄日（排除 8/31）；殘差＝兩者皆為實測之日。</li>
+    <li>均分估算會把多日用量攤平成相同數值，使標準差、最小值失真；比較波動請以「僅實測日」為準。</li>
+    <li>逐日加總與權威總量略有差異：插頭逐日加總 26.57、App 月累計 26.72（以 App 為準）；殘差逐日加總含 9/23 記 0 之修正，權威殘差總量＝81.1−26.72＝54.38。</li>
+  </ul>
+</section>
+
+<section class="panel">
+  <h2>每日用電：插頭＋殘差堆疊，折線為房間總用電<span class="sub">可拖曳下方滑桿縮放；紫色帶＝平均 ±1 標準差（依統計範圍）；斜線＝估算、圓點＝約略</span></h2>
+  <div id="chDaily" class="chart tall"></div>
+</section>
+
+<div class="grid2">
+  <section class="panel"><h2>累積電費走勢<span class="sub">總計／插頭／殘差（NT$）</span></h2><div id="chCum" class="chart"></div></section>
+  <section class="panel"><h2>每日用量分布（箱形圖）<span class="sub">鬚＝最小／最大；點＝各日（橘＝估算）</span></h2><div id="chBox" class="chart"></div></section>
+  <section class="panel"><h2>房間日用量直方圖<span class="sub">每 0.5 度一組，依資料狀態堆疊</span></h2><div id="chHist" class="chart"></div></section>
+  <section class="panel"><h2>星期平均用量<span class="sub">依統計範圍；標籤 n＝天數</span></h2><div id="chWeek" class="chart"></div></section>
+</div>
+
+<section class="panel">
+  <div class="row">
+    <h2 style="margin:0">每日明細<span class="sub">點欄位標題排序</span></h2>
+    <button class="btn" id="dlCsv">⬇ 下載 CSV</button>
+  </div>
+  <div class="tbl-wrap"><table id="recTbl"></table></div>
+</section>
+
+<footer>資料來源：側臥室電表照片、冰箱＋風扇智慧插座 App｜產生時間 2026-09-30（台北時間）｜網頁版・ECharts 5.6.0</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+<script>window.echarts||document.write('<script src="https://unpkg.com/echarts@5.6.0/dist/echarts.min.js"><\/script>')</script>
+<script>
+const DATA = {"meta":{"rate":5.0,"baseline":6986.7,"baselineDate":"2026-08-30","latest":7067.8,"latestNote":"9/30 01:16 讀數，視為 9/29 結束","totalKwh":81.1,"plugApp":26.72,"period":"8/31–9/29","recent7":["2026-09-23","2026-09-29"]},"records":[
+{"date":"2026-08-31","reading":6994.2,"room":7.5,"plug":0.0,"residual":7.5,"residualRaw":7.5,"clamped":false,"fee":37.5,"cumFee":37.5,"plugCumFee":0.0,"resCumFee":37.5,"roomStatus":"measured","plugStatus":"not_recorded","note":"起算日（基準 8/30 電表 6986.7）；插頭 App 尚未開始記錄（0.00），當日殘差含冰箱用電"},
+{"date":"2026-09-01","reading":6996.8,"room":2.6,"plug":0.77,"residual":1.83,"residualRaw":1.83,"clamped":false,"fee":13.0,"cumFee":50.5,"plugCumFee":3.85,"resCumFee":46.65,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 6996.8−6994.2）"},
+{"date":"2026-09-02","reading":7000.1,"room":3.3,"plug":1.04,"residual":2.26,"residualRaw":2.26,"clamped":false,"fee":16.5,"cumFee":67.0,"plugCumFee":9.05,"resCumFee":57.95,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7000.1−6996.8）"},
+{"date":"2026-09-03","reading":null,"room":1.45,"plug":1.11,"residual":0.34,"residualRaw":0.34,"clamped":false,"fee":7.25,"cumFee":74.25,"plugCumFee":14.6,"resCumFee":59.65,"roomStatus":"estimated","plugStatus":"exact","note":"電表缺拍；9/2→9/4 共 2.9 度均分"},
+{"date":"2026-09-04","reading":7003.0,"room":1.45,"plug":1.09,"residual":0.36,"residualRaw":0.36,"clamped":false,"fee":7.25,"cumFee":81.5,"plugCumFee":20.05,"resCumFee":61.45,"roomStatus":"estimated","plugStatus":"exact","note":"電表 7003.0；與 9/3 均分 2.9 度"},
+{"date":"2026-09-05","reading":null,"room":4.8,"plug":1.12,"residual":3.68,"residualRaw":3.68,"clamped":false,"fee":24.0,"cumFee":105.5,"plugCumFee":25.65,"resCumFee":79.85,"roomStatus":"estimated","plugStatus":"exact","note":"電表缺拍；9/4→9/6 共 9.6 度均分"},
+{"date":"2026-09-06","reading":7012.6,"room":4.8,"plug":1.24,"residual":3.56,"residualRaw":3.56,"clamped":false,"fee":24.0,"cumFee":129.5,"plugCumFee":31.85,"resCumFee":97.65,"roomStatus":"estimated","plugStatus":"exact","note":"電表 7012.6；與 9/5 均分 9.6 度"},
+{"date":"2026-09-07","reading":7015.9,"room":3.3,"plug":1.03,"residual":2.27,"residualRaw":2.27,"clamped":false,"fee":16.5,"cumFee":146.0,"plugCumFee":37.0,"resCumFee":109.0,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7015.9−7012.6）；插頭修訂"},
+{"date":"2026-09-08","reading":7019.2,"room":3.3,"plug":1.09,"residual":2.21,"residualRaw":2.21,"clamped":false,"fee":16.5,"cumFee":162.5,"plugCumFee":42.45,"resCumFee":120.05,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7019.2−7015.9）"},
+{"date":"2026-09-09","reading":7021.6,"room":2.4,"plug":0.85,"residual":1.55,"residualRaw":1.55,"clamped":false,"fee":12.0,"cumFee":174.5,"plugCumFee":46.7,"resCumFee":127.8,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7021.6−7019.2）"},
+{"date":"2026-09-10","reading":7024.8,"room":3.2,"plug":0.84,"residual":2.36,"residualRaw":2.36,"clamped":false,"fee":16.0,"cumFee":190.5,"plugCumFee":50.9,"resCumFee":139.6,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7024.8−7021.6）"},
+{"date":"2026-09-11","reading":7026.8,"room":2.0,"plug":0.98,"residual":1.02,"residualRaw":1.02,"clamped":false,"fee":10.0,"cumFee":200.5,"plugCumFee":55.8,"resCumFee":144.7,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7026.8−7024.8）"},
+{"date":"2026-09-12","reading":7030.0,"room":3.2,"plug":0.95,"residual":2.25,"residualRaw":2.25,"clamped":false,"fee":16.0,"cumFee":216.5,"plugCumFee":60.55,"resCumFee":155.95,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7030.0−7026.8）"},
+{"date":"2026-09-13","reading":7033.4,"room":3.4,"plug":1.23,"residual":2.17,"residualRaw":2.17,"clamped":false,"fee":17.0,"cumFee":233.5,"plugCumFee":66.7,"resCumFee":166.8,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7033.4−7030.0）；插頭修訂 1.22→1.23"},
+{"date":"2026-09-14","reading":7036.4,"room":3.0,"plug":1.13,"residual":1.87,"residualRaw":1.87,"clamped":false,"fee":15.0,"cumFee":248.5,"plugCumFee":72.35,"resCumFee":176.15,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7036.4−7033.4）；插頭修訂 1.11→1.13"},
+{"date":"2026-09-15","reading":7039.5,"room":3.1,"plug":1.02,"residual":2.08,"residualRaw":2.08,"clamped":false,"fee":15.5,"cumFee":264.0,"plugCumFee":77.7,"resCumFee":186.3,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7039.5−7036.4）"},
+{"date":"2026-09-16","reading":7042.4,"room":2.9,"plug":1.13,"residual":1.77,"residualRaw":1.77,"clamped":false,"fee":14.5,"cumFee":278.5,"plugCumFee":83.45,"resCumFee":195.05,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7042.4−7039.5）"},
+{"date":"2026-09-17","reading":7045.1,"room":2.7,"plug":0.68,"residual":2.02,"residualRaw":2.02,"clamped":false,"fee":13.5,"cumFee":292.0,"plugCumFee":86.85,"resCumFee":205.15,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7045.1−7042.4）；插頭修訂 0.64→0.68"},
+{"date":"2026-09-18","reading":7047.8,"room":2.7,"plug":0.97,"residual":1.73,"residualRaw":1.73,"clamped":false,"fee":13.5,"cumFee":305.5,"plugCumFee":91.7,"resCumFee":213.8,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7047.8−7045.1）；插頭修訂 0.95→0.97"},
+{"date":"2026-09-19","reading":7051.3,"room":3.5,"plug":1.27,"residual":2.23,"residualRaw":2.23,"clamped":false,"fee":17.5,"cumFee":323.0,"plugCumFee":98.1,"resCumFee":224.9,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7051.3−7047.8）；插頭修訂 1.26→1.27"},
+{"date":"2026-09-20","reading":7054.4,"room":3.1,"plug":1.05,"residual":2.05,"residualRaw":2.05,"clamped":false,"fee":15.5,"cumFee":338.5,"plugCumFee":103.35,"resCumFee":235.15,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7054.4−7051.3）"},
+{"date":"2026-09-21","reading":7057.5,"room":3.1,"plug":1.13,"residual":1.97,"residualRaw":1.97,"clamped":false,"fee":15.5,"cumFee":354.0,"plugCumFee":109.1,"resCumFee":244.9,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7057.5−7054.4）"},
+{"date":"2026-09-22","reading":7060.8,"room":3.3,"plug":1.04,"residual":2.26,"residualRaw":2.26,"clamped":false,"fee":16.5,"cumFee":370.5,"plugCumFee":114.25,"resCumFee":256.25,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7060.8−7057.5）"},
+{"date":"2026-09-23","reading":null,"room":0.7,"plug":0.97,"residual":0.0,"residualRaw":-0.27,"clamped":true,"fee":3.5,"cumFee":374.0,"plugCumFee":119.1,"resCumFee":256.25,"roomStatus":"estimated","plugStatus":"exact","note":"未拍；7060.8→7065.0 共 4.2 度 ÷ 6；插頭 0.97＞0.70，殘差記 0（均分假象）"},
+{"date":"2026-09-24","reading":null,"room":0.7,"plug":0.41,"residual":0.29,"residualRaw":0.29,"clamped":false,"fee":3.5,"cumFee":377.5,"plugCumFee":121.15,"resCumFee":257.7,"roomStatus":"estimated","plugStatus":"exact","note":"未拍；4.2 度 ÷ 6 均分"},
+{"date":"2026-09-25","reading":null,"room":0.7,"plug":0.41,"residual":0.29,"residualRaw":0.29,"clamped":false,"fee":3.5,"cumFee":381.0,"plugCumFee":123.2,"resCumFee":259.15,"roomStatus":"estimated","plugStatus":"exact","note":"未拍；4.2 度 ÷ 6 均分"},
+{"date":"2026-09-26","reading":null,"room":0.7,"plug":0.4,"residual":0.3,"residualRaw":0.3,"clamped":false,"fee":3.5,"cumFee":384.5,"plugCumFee":125.2,"resCumFee":260.65,"roomStatus":"estimated","plugStatus":"exact","note":"未拍；4.2 度 ÷ 6 均分"},
+{"date":"2026-09-27","reading":null,"room":0.7,"plug":0.4,"residual":0.3,"residualRaw":0.3,"clamped":false,"fee":3.5,"cumFee":388.0,"plugCumFee":127.2,"resCumFee":262.15,"roomStatus":"estimated","plugStatus":"exact","note":"未拍；4.2 度 ÷ 6 均分"},
+{"date":"2026-09-28","reading":7065.0,"room":0.7,"plug":0.42,"residual":0.28,"residualRaw":0.28,"clamped":false,"fee":3.5,"cumFee":391.5,"plugCumFee":129.3,"resCumFee":262.2,"roomStatus":"estimated","plugStatus":"exact","note":"4.2 度 ÷ 6 均分；7065.0 實際讀於 9/29 中午"},
+{"date":"2026-09-29","reading":7067.8,"room":2.8,"plug":0.8,"residual":2.0,"residualRaw":2.0,"clamped":false,"fee":14.0,"cumFee":405.5,"plugCumFee":133.6,"resCumFee":271.9,"roomStatus":"approx","plugStatus":"exact","note":"約略：7065.0（9/29 中午）→ 7067.8（9/30 01:16）；插頭 App 月累計 26.72"}
+]};
+const M = DATA.meta, R = DATA.records, RATE = M.rate;
+const WD = ['日','一','二','三','四','五','六'];
+const FONT = getComputedStyle(document.body).fontFamily;
+const MOBILE = window.innerWidth < 600;
+const C = {teal:'#2dd4bf',coral:'#fb7185',purple:'#c084fc',gold:'#fbbf24',cyan:'#22d3ee',orange:'#fb923c',lime:'#a3e635',pink:'#f472b6',muted:'#94a3b8',border:'#334155',text:'#f8fafc'};
+R.forEach(r=>{const d=new Date(r.date+'T00:00:00');r.wd=d.getDay();r.md=(d.getMonth()+1)+'/'+d.getDate();
+  r.mark=r.roomStatus==='estimated'?'*':(r.roomStatus==='approx'?'≈':'');r.label=r.md+r.mark;});
+const f1=v=>v.toFixed(1), f2=v=>v.toFixed(2), f3=v=>v.toFixed(3);
+const statusText=r=>r.roomStatus==='measured'?'實測':(r.roomStatus==='estimated'?'估算（均分）':'約略（中午讀數）');
+const SERIES={room:{name:'房間總用電',color:C.gold,cls:'grp-room'},plug:{name:'插頭（冰箱＋風扇）',color:C.teal,cls:'grp-plug'},residual:{name:'殘差（熱水器＋小電）',color:C.coral,cls:'grp-res'}};
+function isActual(r,k){if(k==='room')return r.roomStatus==='measured';if(k==='plug')return r.plugStatus==='exact';return r.roomStatus==='measured'&&r.plugStatus==='exact';}
+function pct(sorted,q){const pos=(sorted.length-1)*q,lo=Math.floor(pos),hi=Math.ceil(pos);return sorted[lo]+(sorted[hi]-sorted[lo])*(pos-lo);}
+function stats(rows,k){
+  const v=rows.map(r=>r[k]),n=v.length,s=[...v].sort((a,b)=>a-b);
+  const sum=v.reduce((a,b)=>a+b,0),mean=sum/n,ss=v.reduce((a,b)=>a+(b-mean)**2,0);
+  const sd=Math.sqrt(ss/(n-1)),sdPop=Math.sqrt(ss/n),mn=s[0],mx=s[n-1];
+  return {n,mean,median:pct(s,.5),sd,sdPop,min:mn,max:mx,minDates:rows.filter(r=>r[k]===mn).map(r=>r.date),maxDates:rows.filter(r=>r[k]===mx).map(r=>r.date),
+    cv:sd/mean*100,p25:pct(s,.25),p75:pct(s,.75),sum,sorted:s};
+}
+const ST={};
+for(const k of Object.keys(SERIES)){ST[k]={all:stats(R,k),actual:stats(R.filter(r=>isActual(r,k)),k)};}
+window.__STATS=ST;
+let SCOPE='all';
+const rowsFor=k=>SCOPE==='all'?R:R.filter(r=>isActual(r,k));
+const md=d=>{const x=d.split('-');return (+x[1])+'/'+(+x[2]);};
+function datesTxt(ds){if(ds.length<=2)return ds.map(md).join('、');return md(ds[0])+'–'+md(ds[ds.length-1])+' 等 '+ds.length+' 天';}
+
+/* ── KPI cards ── */
+const TOTAL=M.totalKwh, DAYS=R.length, MEAN=TOTAL/DAYS;
+const recent=R.filter(r=>r.date>=M.recent7[0]&&r.date<=M.recent7[1]);
+const recentAvg=recent.reduce((a,r)=>a+r.room,0)/recent.length;
+const RES_AUTH=+(TOTAL-M.plugApp).toFixed(2);
+const nMeas=R.filter(r=>r.roomStatus==='measured').length,nEst=R.filter(r=>r.roomStatus==='estimated').length,nAp=R.filter(r=>r.roomStatus==='approx').length;
+const ASSUME={recent:{v:recentAvg,t:'9/30 以近 7 日（9/23–9/29）平均'},all:{v:MEAN,t:'9/30 以全期（30 天）平均'},actual:{v:ST.room.actual.mean,t:'9/30 以實測日平均'}};
+function renderCards(){
+  const sel=document.getElementById('assume')?document.getElementById('assume').value:'recent';
+  const a=ASSUME[sel],est=TOTAL+a.v;
+  document.getElementById('cards').innerHTML=`
+  <div class="card" style="--c:${C.gold}"><div class="t">總用電／電費</div><div class="v">${f1(TOTAL)} <small>度</small>｜NT$${f1(TOTAL*RATE)}</div><div class="s">電表 6986.7 → 7067.8（${M.period}）</div></div>
+  <div class="card" style="--c:${C.lime}"><div class="t">統計天數</div><div class="v">${DAYS} <small>天</small></div><div class="s">實測 ${nMeas}｜估算 ${nEst}｜約略 ${nAp}</div></div>
+  <div class="card" style="--c:${C.cyan}"><div class="t">日平均用電</div><div class="v">${f2(MEAN)} <small>度／日</small></div><div class="s">約 NT$${f1(MEAN*RATE)}／日｜中位數 ${f2(ST.room.all.median)}｜實測日均 ${f2(ST.room.actual.mean)}</div></div>
+  <div class="card" style="--c:${C.teal}"><div class="t">插頭（冰箱＋風扇）</div><div class="v">${f2(M.plugApp)} <small>度</small>｜NT$${f1(M.plugApp*RATE)}</div><div class="s">App 月累計（逐日加總 ${f2(ST.plug.all.sum)}）｜占 ${f1(M.plugApp/TOTAL*100)}%</div></div>
+  <div class="card" style="--c:${C.coral}"><div class="t">殘差（熱水器＋小電，非冷氣）</div><div class="v">${f2(RES_AUTH)} <small>度</small>｜NT$${f1(RES_AUTH*RATE)}</div><div class="s">電表 − App 月累計｜占 ${f1(RES_AUTH/TOTAL*100)}%</div></div>
+  <div class="card" style="--c:${C.purple}"><div class="t">計費期全月預估（8/31–9/30，31 天）</div><div class="v">${f1(est)} <small>度</small>｜NT$${f1(est*RATE)}</div>
+    <div class="s">假設：${a.t} ${f2(a.v)} 度</div>
+    <select id="assume"><option value="recent">9/30＝近 7 日平均</option><option value="all">9/30＝全期平均</option><option value="actual">9/30＝實測日平均</option></select></div>`;
+  const s=document.getElementById('assume');s.value=sel;s.onchange=renderCards;
+}
+renderCards();
+
+/* ── Analysis ── */
+(function(){
+  const low=R.filter(r=>r.date>='2026-09-23'&&r.date<='2026-09-28'),lowSum=low.reduce((a,r)=>a+r.room,0),lowPlug=low.reduce((a,r)=>a+r.plug,0)/low.length;
+  const d29=R.find(r=>r.date==='2026-09-29'),d31=R[0];
+  const act=ST.room.actual,ra=ST.residual.actual,pa=ST.plug.actual;
+  const items=[
+   `<b>用電水準：</b>30 天共 ${f1(TOTAL)} 度、NT$${f1(TOTAL*RATE)}，日均 ${f2(MEAN)} 度（約 NT$${f1(MEAN*RATE)}／日）；僅看實測日則為 ${f2(act.mean)} ± ${f2(act.sd)} 度（中位數 ${f2(act.median)}）。無冷氣，屬低用電房間。`,
+   `<b>熱水器主導：</b>殘差（熱水器＋小電）${f2(RES_AUTH)} 度，占總用電 <b>${f1(RES_AUTH/TOTAL*100)}%</b>；冰箱＋風扇 ${f2(M.plugApp)} 度占 ${f1(M.plugApp/TOTAL*100)}%。實測日殘差 ${f2(ra.mean)} ± ${f2(ra.sd)} 度（CV ${f1(ra.cv)}%），相當穩定，符合每日固定洗澡用熱水的型態。`,
+   `<b>冰箱＋風扇：</b>實測日均 ${f2(pa.mean)} 度（最高 ${f2(pa.max)}，${datesTxt(pa.maxDates)}）；9/24–9/27 降至約 0.40 度，與同期房間用電偏低一致。`,
+   `<b>低用電週 9/23–9/28：</b>6 天僅 ${f1(lowSum)} 度（均分為每日 0.70，為實測日均的 ${f1(0.70/act.mean*100)}%），插頭平均 ${f2(lowPlug)} 度；此期間電表未逐日拍照，逐日數值為估算。9/23 插頭 0.97＞均分 0.70，殘差以 0 顯示。`,
+   `<b>9/29 熱水器回升：</b>房間約 ${f2(d29.room)} 度（中午讀數 7065.0 → 9/30 01:16 的 7067.8，約略值），其中插頭 ${f2(d29.plug)}、殘差約 <b>${f2(d29.residual)}</b> 度，熱水器使用明顯恢復。`,
+   `<b>離群值：</b>8/31 為最高 ${f1(d31.room)} 度（起算首日，且插頭 App 當日尚未記錄，殘差含冰箱用電）；排除後實測日波動更小。全部天數的標準差 ${f2(ST.room.all.sd)}（CV ${f1(ST.room.all.cv)}%）受均分估算與 8/31 影響而偏大。`,
+  ];
+  document.getElementById('analysis').innerHTML=items.map(x=>`<li>${x}</li>`).join('');
+})();
+
+/* ── Stats table ── */
+(function(){
+  const ks=Object.keys(SERIES);
+  let h=`<thead><tr><th class="l" rowspan="2">參數</th>${ks.map(k=>`<th colspan="2" class="${SERIES[k].cls}" style="text-align:center">${SERIES[k].name}</th>`).join('')}</tr><tr>${ks.map(()=>`<th>全部天數</th><th>僅實測日</th>`).join('')}</tr></thead><tbody>`;
+  const rows=[
+    ['天數 n',s=>s.n],['平均數（度）',s=>f3(s.mean)],['中位數（度）',s=>f3(s.median)],['樣本標準差 s（度）',s=>f3(s.sd)],
+    ['母體標準差 σ（度，參考）',s=>f3(s.sdPop),'dim'],['變異係數 CV',s=>f1(s.cv)+'%'],['最小值（度）',s=>f2(s.min)],['最小值日期',s=>datesTxt(s.minDates)],
+    ['最大值（度）',s=>f2(s.max)],['最大值日期',s=>datesTxt(s.maxDates)],['P25（度）',s=>f3(s.p25)],['P75（度）',s=>f3(s.p75)],['四分位距 IQR（度）',s=>f3(s.p75-s.p25)],
+    ['逐日加總（度）',s=>f2(s.sum)],['平均日電費（NT$）',s=>f2(s.mean*RATE)],
+  ];
+  for(const [lab,fn,cls] of rows){h+=`<tr><td class="lab">${lab}</td>${ks.map(k=>`<td class="${cls||''}">${fn(ST[k].all)}</td><td class="act ${cls||''}">${fn(ST[k].actual)}</td>`).join('')}</tr>`;}
+  document.getElementById('statsTbl').innerHTML=h+'</tbody>';
+})();
+
+/* ── Charts ── */
+const base={backgroundColor:'transparent',textStyle:{fontFamily:FONT,color:C.muted},animationDuration:600};
+const axisCommon={axisLine:{lineStyle:{color:C.border}},axisLabel:{color:C.muted,fontFamily:FONT},splitLine:{lineStyle:{color:'#233044',type:'dashed'}}};
+const legendCommon={textStyle:{color:C.text,fontFamily:FONT},top:0};
+const tipCommon={backgroundColor:'#0f172aee',borderColor:C.border,textStyle:{color:C.text,fontFamily:FONT,fontSize:12}};
+const decalEst={symbol:'rect',dashArrayX:[1,0],dashArrayY:[3,4],rotation:-Math.PI/4,color:'rgba(251,191,36,.75)'};
+const decalAp={symbol:'circle',symbolSize:0.6,dashArrayX:[[6,6]],dashArrayY:[6,0],color:'rgba(34,211,238,.9)'};
+const charts={};
+function mk(id){const c=echarts.init(document.getElementById(id),null,{renderer:'canvas'});charts[id]=c;return c;}
+const estAreas=(()=>{const a=[];let s=null;R.forEach((r,i)=>{const e=r.roomStatus!=='measured';if(e&&s===null)s=i;if((!e||i===R.length-1)&&s!==null){const end=e?i:i-1;a.push([{xAxis:R[s].label},{xAxis:R[end].label}]);s=null;}});return a;})();
+
+function dailyOption(){
+  const st=ST.room[SCOPE];
+  const deco=r=>r.roomStatus==='estimated'?{decal:decalEst,borderColor:C.gold,borderWidth:1}:(r.roomStatus==='approx'?{decal:decalAp,borderColor:C.cyan,borderWidth:1}:{});
+  return {...base,
+    legend:{...legendCommon,data:['插頭（冰箱＋風扇）','殘差（熱水器＋小電）','房間總用電']},
+    tooltip:{...tipCommon,trigger:'axis',axisPointer:{type:'shadow'},formatter:ps=>{const r=R[ps[0].dataIndex];
+      const badge=r.roomStatus==='measured'?'<span style="color:#6ee7b7">實測</span>':(r.roomStatus==='estimated'?'<span style="color:#fdba74">估算（均分）</span>':'<span style="color:#67e8f9">約略（中午讀數）</span>');
+      return `<b>${r.date}（${WD[r.wd]}）</b> ${badge}<br>房間：<b style="color:${C.gold}">${f2(r.room)}</b> 度（NT$${f1(r.fee)}）<br>插頭：<span style="color:${C.teal}">${f2(r.plug)}</span>${r.plugStatus==='not_recorded'?'（未記錄）':''}<br>殘差：<span style="color:${C.coral}">${f2(r.residual)}</span>${r.clamped?`（原始 ${f2(r.residualRaw)}，記 0）`:''}<br>累積：NT$${f1(r.cumFee)}${r.note?`<br><span style="color:${C.muted}">${r.note}</span>`:''}`;}},
+    grid:MOBILE?{left:36,right:52,top:44,bottom:78}:{left:50,right:86,top:44,bottom:78},
+    xAxis:{type:'category',data:R.map(r=>r.label+'\n'+WD[r.wd]),...axisCommon,axisLabel:{color:C.text,fontFamily:FONT,interval:MOBILE?'auto':0,hideOverlap:true,fontSize:MOBILE?10:11}},
+    yAxis:{type:'value',name:'度（kWh）',nameTextStyle:{color:C.muted},...axisCommon},
+    dataZoom:[{type:'inside',start:MOBILE?62:0,end:100},{type:'slider',start:MOBILE?62:0,end:100,height:22,bottom:12,borderColor:C.border,textStyle:{color:C.muted},fillerColor:'rgba(192,132,252,.18)'}],
+    series:[
+      {name:'插頭（冰箱＋風扇）',type:'bar',stack:'d',barWidth:'58%',itemStyle:{color:C.teal},data:R.map(r=>({value:r.plug,itemStyle:r.plugStatus==='not_recorded'?{color:'#475569'}:{}}))},
+      {name:'殘差（熱水器＋小電）',type:'bar',stack:'d',itemStyle:{color:C.coral},data:R.map(r=>({value:r.residual,itemStyle:{...deco(r),...(r.clamped?{borderColor:C.pink,borderWidth:2}:{})}}))},
+      {name:'房間總用電',type:'line',smooth:false,lineStyle:{color:C.gold,width:2.5},itemStyle:{color:C.gold},symbolSize:8,
+        data:R.map(r=>({value:r.room,symbol:r.roomStatus==='measured'?'circle':(r.roomStatus==='estimated'?'emptyCircle':'emptyDiamond'),symbolSize:r.roomStatus==='measured'?8:11})),
+        label:{show:!MOBILE,position:'top',color:C.gold,fontSize:10,formatter:p=>f1(p.value)+R[p.dataIndex].mark},
+        markLine:{silent:true,symbol:'none',lineStyle:{color:C.purple,type:'dashed'},label:{color:C.purple,position:'end',formatter:`平均\n${f2(st.mean)}`},data:[{yAxis:st.mean}]},
+        markArea:{silent:true,itemStyle:{color:'rgba(192,132,252,.10)'},label:{show:true,position:'insideTopRight',color:'#e9d5ff',fontSize:11,formatter:`${SCOPE==='all'?'全部':'實測'} 平均±1s：${f2(st.mean-st.sd)}–${f2(st.mean+st.sd)}`},data:[[{yAxis:Math.max(0,st.mean-st.sd)},{yAxis:st.mean+st.sd}]]}},
+    ]};
+}
+function cumOption(){
+  return {...base,legend:{...legendCommon},tooltip:{...tipCommon,trigger:'axis',valueFormatter:v=>'NT$'+f1(v)},
+    grid:MOBILE?{left:44,right:62,top:40,bottom:56}:{left:56,right:78,top:40,bottom:56},
+    xAxis:{type:'category',data:R.map(r=>r.label),...axisCommon,boundaryGap:false},
+    yAxis:{type:'value',name:'NT$',...axisCommon},
+    dataZoom:[{type:'inside'},{type:'slider',height:18,bottom:8,borderColor:C.border,textStyle:{color:C.muted}}],
+    series:[
+      {name:'累積總電費',type:'line',data:R.map(r=>r.cumFee),lineStyle:{color:C.purple,width:3},itemStyle:{color:C.purple},areaStyle:{color:'rgba(192,132,252,.12)'},
+        endLabel:{show:true,color:C.purple,formatter:p=>'NT$'+f1(p.value)},markArea:{silent:true,itemStyle:{color:'rgba(251,191,36,.07)'},data:estAreas}},
+      {name:'累積殘差',type:'line',data:R.map(r=>r.resCumFee),lineStyle:{color:C.coral,width:2.5},itemStyle:{color:C.coral},endLabel:{show:true,color:C.coral,formatter:p=>f1(p.value)}},
+      {name:'累積插頭',type:'line',data:R.map(r=>r.plugCumFee),lineStyle:{color:C.teal,width:2.5},itemStyle:{color:C.teal},endLabel:{show:true,color:C.teal,formatter:p=>f1(p.value)}},
+    ]};
+}
+function boxOption(){
+  const ks=Object.keys(SERIES),cats=MOBILE?['房間','插頭','殘差']:ks.map(k=>SERIES[k].name);
+  const bx=sc=>ks.map(k=>{const s=ST[k][sc];return [s.min,s.p25,s.median,s.p75,s.max];});
+  const pts=[];ks.forEach((k,ci)=>rowsFor(k).forEach((r,j)=>{pts.push({value:[ci+0.36+((j%5)-2)*0.025,r[k]],r,k,itemStyle:{color:r.roomStatus==='measured'&&!(k==='plug'&&false)?(k==='plug'||r.roomStatus==='measured'?SERIES[k].color:C.orange):C.orange,opacity:.85}});}));
+  pts.forEach(p=>{const est=(p.k!=='plug'&&p.r.roomStatus!=='measured')||(p.k!=='room'&&p.r.plugStatus!=='exact');p.itemStyle.color=est?C.orange:SERIES[p.k].color;});
+  return {...base,legend:{...legendCommon,data:['全部天數','僅實測日','各日（'+(SCOPE==='all'?'全部':'實測')+'）']},
+    tooltip:{...tipCommon,trigger:'item',formatter:p=>{if(p.seriesType==='boxplot'){const d=p.data.slice(-5);return `<b>${p.name}｜${p.seriesName}</b><br>最小 ${f2(d[0])}<br>P25 ${f3(d[1])}<br>中位數 ${f3(d[2])}<br>P75 ${f3(d[3])}<br>最大 ${f2(d[4])}`;}
+      const r=p.data.r;return `${r.date}（${WD[r.wd]}）<br>${SERIES[p.data.k].name}：${f2(p.data.value[1])} 度<br>${statusText(r)}${r.plugStatus!=='exact'?'｜插頭未記錄':''}`;}},
+    grid:{left:50,right:20,top:44,bottom:40},
+    xAxis:{type:'category',data:cats,...axisCommon,axisLabel:{color:C.text,fontFamily:FONT,interval:0}},
+    xAxis2:null,
+    yAxis:{type:'value',name:'度／日',...axisCommon},
+    series:[
+      {name:'全部天數',type:'boxplot',data:bx('all'),itemStyle:{color:'rgba(251,191,36,.15)',borderColor:C.gold,borderWidth:1.5},boxWidth:[12,26]},
+      {name:'僅實測日',type:'boxplot',data:bx('actual'),itemStyle:{color:'rgba(163,230,53,.15)',borderColor:C.lime,borderWidth:1.5},boxWidth:[12,26]},
+      {name:'各日（'+(SCOPE==='all'?'全部':'實測')+'）',type:'scatter',xAxisIndex:1,data:pts,symbolSize:6,itemStyle:{color:C.muted}},
+    ]};
+}
+function boxOptionFixed(){const o=boxOption();delete o.xAxis2;o.xAxis=[o.xAxis,{type:'value',min:-0.5,max:2.5,show:false}];return o;}
+function histOption(){
+  const bins=[];for(let x=0;x<8;x+=0.5)bins.push(x);
+  const cnt=st=>bins.map(b=>R.filter(r=>r.roomStatus===st&&r.room>=b-1e-9&&r.room<b+0.5-1e-9).length);
+  return {...base,legend:{...legendCommon},tooltip:{...tipCommon,trigger:'axis',axisPointer:{type:'shadow'},formatter:ps=>{const i=ps[0].dataIndex;
+      const ds=R.filter(r=>r.room>=bins[i]-1e-9&&r.room<bins[i]+0.5-1e-9).map(r=>r.label);return `<b>${f1(bins[i])}–${f1(bins[i]+0.5)} 度</b><br>${ps.map(p=>p.marker+p.seriesName+'：'+p.value+' 天').join('<br>')}${ds.length?'<br><span style="color:#94a3b8">'+ds.join('、')+'</span>':''}`;}},
+    grid:{left:44,right:16,top:44,bottom:40},
+    xAxis:{type:'category',data:bins.map(b=>f1(b)+'–'+f1(b+0.5)),...axisCommon,axisLabel:{color:C.muted,rotate:40,fontSize:10}},
+    yAxis:{type:'value',name:'天數',minInterval:1,...axisCommon},
+    series:[
+      {name:'實測',type:'bar',stack:'h',data:cnt('measured'),itemStyle:{color:C.gold}},
+      {name:'估算（均分）',type:'bar',stack:'h',data:cnt('estimated'),itemStyle:{color:C.orange,decal:decalEst}},
+      {name:'約略',type:'bar',stack:'h',data:cnt('approx'),itemStyle:{color:C.cyan,decal:decalAp}},
+    ]};
+}
+function weekOption(){
+  const order=[1,2,3,4,5,6,0];
+  const avg=(k)=>order.map(w=>{const rs=rowsFor(k).filter(r=>r.wd===w);return rs.length?{value:+(rs.reduce((a,r)=>a+r[k],0)/rs.length).toFixed(3),n:rs.length}:{value:null,n:0};});
+  const mkS=(k,col)=>({name:SERIES[k].name,type:'bar',itemStyle:{color:col},data:avg(k).map(d=>({value:d.value,n:d.n})),
+      label:{show:true,position:'top',color:col,fontSize:10,formatter:p=>p.value==null?'':f2(p.value)+'\nn='+p.data.n}});
+  return {...base,legend:{...legendCommon},tooltip:{...tipCommon,trigger:'axis',axisPointer:{type:'shadow'},formatter:ps=>`<b>星期${WD[order[ps[0].dataIndex]]}</b><br>`+ps.map(p=>p.marker+p.seriesName+'：'+(p.value==null?'—':f2(p.value)+' 度（n='+p.data.n+'）')).join('<br>')},
+    grid:{left:44,right:16,top:48,bottom:30},
+    xAxis:{type:'category',data:order.map(w=>'週'+WD[w]),...axisCommon,axisLabel:{color:C.text,fontFamily:FONT}},
+    yAxis:{type:'value',name:'平均度／日',...axisCommon},
+    series:[mkS('room',C.gold),mkS('plug',C.teal),mkS('residual',C.coral)]};
+}
+function mob(o){if(!MOBILE)return o;[].concat(o.grid).forEach(g=>{g.top=(g.top||40)+30;});return o;}
+function renderCharts(){
+  (charts.chDaily||mk('chDaily')).setOption(mob(dailyOption()),true);
+  (charts.chCum||mk('chCum')).setOption(mob(cumOption()),true);
+  (charts.chBox||mk('chBox')).setOption(mob(boxOptionFixed()),true);
+  (charts.chHist||mk('chHist')).setOption(mob(histOption()),true);
+  (charts.chWeek||mk('chWeek')).setOption(mob(weekOption()),true);
+}
+renderCharts();
+window.addEventListener('resize',()=>Object.values(charts).forEach(c=>c.resize()));
+document.querySelectorAll('#scopeSeg button').forEach(b=>b.onclick=()=>{SCOPE=b.dataset.s;document.querySelectorAll('#scopeSeg button').forEach(x=>x.classList.toggle('on',x===b));renderCharts();});
+
+/* ── Record table ── */
+const COLS=[
+  {k:'date',t:'日期',l:1,f:r=>r.md+r.mark},{k:'wd',t:'星期',l:1,f:r=>WD[r.wd],sort:r=>(r.wd+6)%7},
+  {k:'reading',t:'電表讀數',f:r=>r.reading==null?'—':f1(r.reading),sort:r=>r.reading??-1},
+  {k:'room',t:'房間（度）',f:r=>f2(r.room)},{k:'plug',t:'插頭（度）',f:r=>f2(r.plug)},{k:'residual',t:'殘差（度）',f:r=>f2(r.residual)},
+  {k:'fee',t:'當日電費 NT$',f:r=>f1(r.fee)},{k:'cumFee',t:'累積電費 NT$',f:r=>f1(r.cumFee)},
+  {k:'roomStatus',t:'狀態',l:1,f:r=>{let b=r.roomStatus==='measured'?'<span class="badge b-meas">實測</span>':(r.roomStatus==='estimated'?'<span class="badge b-est">估算</span>':'<span class="badge b-approx">約略</span>');
+    if(r.plugStatus!=='exact')b+=' <span class="badge b-norec">插頭未記錄</span>';if(r.clamped)b+=' <span class="badge b-clamp">殘差記 0</span>';return b;}},
+  {k:'note',t:'備註',l:1,cls:'note',f:r=>r.note||''},
+];
+let sortK='date',sortDir=1;
+function renderTable(){
+  const col=COLS.find(c=>c.k===sortK),key=col.sort||(r=>r[sortK]);
+  const rows=[...R].sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*sortDir;});
+  let h='<thead><tr>'+COLS.map(c=>`<th class="${c.l?'l':''}" data-k="${c.k}">${c.t}<span class="arr">${c.k===sortK?(sortDir>0?'▲':'▼'):'⇅'}</span></th>`).join('')+'</tr></thead><tbody>';
+  for(const r of rows)h+=`<tr class="${r.roomStatus==='estimated'?'est':(r.roomStatus==='approx'?'approx':'')}">`+COLS.map(c=>`<td class="${c.l?'l':''} ${c.cls||''}">${c.f(r)}</td>`).join('')+'</tr>';
+  h+=`<tr class="total"><td class="l">合計</td><td></td><td>${f1(M.baseline)}→${f1(M.latest)}</td><td>${f1(TOTAL)}</td><td>${f2(M.plugApp)}*</td><td>${f2(RES_AUTH)}*</td><td>${f1(TOTAL*RATE)}</td><td>${f1(TOTAL*RATE)}</td><td class="l"></td><td class="l note">*插頭以 App 月累計為準（逐日加總 ${f2(ST.plug.all.sum)}）；殘差＝電表 − App</td></tr>`;
+  document.getElementById('recTbl').innerHTML=h+'</tbody>';
+  document.querySelectorAll('#recTbl th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(k===sortK)sortDir=-sortDir;else{sortK=k;sortDir=1;}renderTable();});
+}
+renderTable();
+document.getElementById('dlCsv').onclick=()=>{
+  const head=['日期','星期','電表讀數_kWh','房間_kWh','插頭_kWh','殘差_kWh','殘差原始_kWh','當日電費_TWD','累積電費_TWD','累積插頭電費_TWD','累積殘差電費_TWD','房間資料狀態','插頭資料狀態','備註'];
+  const esc=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+  const lines=[head.join(',')].concat(R.map(r=>[r.date,WD[r.wd],r.reading??'',r.room,r.plug,r.residual,r.residualRaw,r.fee,r.cumFee,r.plugCumFee,r.resCumFee,statusText(r),r.plugStatus==='exact'?'App精確':'未記錄',r.note].map(esc).join(',')));
+  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='2026-09_側臥室用電明細.csv';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+};
+window.__READY=true;
+</script>
+</body>
+</html>
