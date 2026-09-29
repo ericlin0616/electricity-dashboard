@@ -1,8 +1,9 @@
-name: Deploy to GitHub Pages
+# GitHub Pages is currently served from the gh-pages branch (legacy branch deploy).
+# This Actions workflow is kept for manual use only; it needs Pages "Source: GitHub Actions"
+# to be selected in repo Settings > Pages before it can succeed.
+name: Deploy to GitHub Pages (manual)
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -23,8 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
