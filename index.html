@@ -258,13 +258,13 @@ footer{margin:28px 4px 0;font-size:12px;color:var(--faint);text-align:center;lin
   </section>
   <p class="foot" id="recFoot"></p>
 
-  <footer id="footer">資料來源：電表照片・冰箱＋風扇智慧插座 App<br>更新於 2026-10-01（台北時間）・網頁版・ECharts 5.6.0</footer>
+  <footer id="footer">資料來源：電表照片・冰箱＋風扇智慧插座 App<br>更新於 2026-10-02（台北時間）・網頁版・ECharts 5.6.0</footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
 <script>window.echarts||document.write('<script src="https://unpkg.com/echarts@5.6.0/dist/echarts.min.js"><\/script>')</script>
 <script>
-const DATA = {"rate":5.0,"current":"2026-10","updated":"2026-10-01","months":[
+const DATA = {"rate":5.0,"current":"2026-10","updated":"2026-10-02","months":[
 {"key":"2026-09","label":"9 月","year":2026,"month":9,"finalized":true,"daysInMonth":31,"period":"8/31–9/30","baseline":6986.7,"baselineLabel":"8/30","end":7071.0,"endLabel":"9/30","totalKwh":84.3,"plugApp":27.72,"plugNote":"App 9 月累計（26.72 − 0.07 ＋ 1.07）","statFoot":"<b>樣本標準差</b>（n−1）；百分位數採線性內插（同 Excel PERCENTILE.INC）。<b>僅實測日</b>：房間排除均分估算日（9/3–9/6、9/23–9/28）與 9/29 約略值；插頭排除 8/31（App 尚未記錄）；殘差需兩者皆實測。均分估算會壓低波動、扭曲最小值，比較穩定度請看「僅實測日」。","recFoot":"插頭合計以 App 9 月累計 27.72 度為準：9/30 01:16 顯示的 26.72 已含 9/30 的 0.07，故 26.72 − 0.07 ＋ 9/30 全日 1.07 ＝ 27.72（逐日加總 27.64）。殘差＝電表 − 插頭，代表熱水器與其他小電器（非冷氣）。9/23 插頭 0.97 大於均分估算 0.70，殘差以 0 顯示（均分造成的假象）。9/30 用電 7067.8→7071.0 的起點讀於 9/30 01:16，與 9/29 重疊約 1 小時，影響可忽略。","dailyNote":"9/23–9/28 電表未逐日拍照（4.2 度均分），9/29 為中午讀數推算；9/30 起點讀於 9/30 01:16（與 9/29 重疊約 1 小時）。","cumNote":"淺色區段為電表估算期間（9/3–9/6、9/23–9/29）。累計以電表讀數為準：9 月結算 NT$421.5（冰箱＋風扇 138.6、熱水器＋小電 282.9）。","days":31,"records":[
 {"date":"2026-08-31","reading":6994.2,"room":7.5,"plug":0.0,"residual":7.5,"residualRaw":7.5,"clamped":false,"fee":37.5,"cumFee":37.5,"plugCumFee":0.0,"resCumFee":37.5,"roomStatus":"measured","plugStatus":"not_recorded","note":"起算日（基準 8/30 電表 6986.7）；插頭 App 尚未開始記錄（0.00），當日殘差含冰箱用電"},
 {"date":"2026-09-01","reading":6996.8,"room":2.6,"plug":0.77,"residual":1.83,"residualRaw":1.83,"clamped":false,"fee":13.0,"cumFee":50.5,"plugCumFee":3.85,"resCumFee":46.65,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 6996.8−6994.2）"},
@@ -298,8 +298,9 @@ const DATA = {"rate":5.0,"current":"2026-10","updated":"2026-10-01","months":[
 {"date":"2026-09-29","reading":7067.8,"room":2.8,"plug":0.8,"residual":2.0,"residualRaw":2.0,"clamped":false,"fee":14.0,"cumFee":405.5,"plugCumFee":133.6,"resCumFee":271.9,"roomStatus":"approx","plugStatus":"exact","note":"約略：7065.0（9/29 中午）→ 7067.8（9/30 01:16）；App 當時顯示月累計 26.72（含 9/30 的 0.07）"},
 {"date":"2026-09-30","reading":7071.0,"room":3.2,"plug":1.07,"residual":2.13,"residualRaw":2.13,"clamped":false,"fee":16.0,"cumFee":421.5,"plugCumFee":138.6,"resCumFee":282.9,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7071.0−7067.8；起點讀於 9/30 01:16，與 9/29 重疊約 1 小時）；插頭 1.07（10/1 App「昨日」）；9 月插頭 27.72"}
 ]},
-{"key":"2026-10","label":"10 月","year":2026,"month":10,"finalized":false,"daysInMonth":31,"period":"10/1–10/1","baseline":7071.0,"baselineLabel":"9/30","end":7074.2,"endLabel":"10/1","totalKwh":3.2,"plugApp":1.04,"plugNote":"App 10 月累計","statFoot":"<b>樣本標準差</b>（n−1）；百分位數採線性內插（同 Excel PERCENTILE.INC）。","recFoot":"插頭以 App 10 月累計為準；殘差＝電表 − 插頭，代表熱水器與其他小電器（非冷氣）。10 月以 9 月結算讀數 7071.0 為基準。","dailyNote":"留白為尚未到來的日期。","cumNote":"虛線為全月預估（至今累計 ＋ 基準日均 × 剩餘天數）。","days":1,"records":[
-{"date":"2026-10-01","reading":7074.2,"room":3.2,"plug":1.04,"residual":2.16,"residualRaw":2.16,"clamped":false,"fee":16.0,"cumFee":16.0,"plugCumFee":5.2,"resCumFee":10.8,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7074.2−7071.0）；插頭 App 10 月累計 1.04"}
+{"key":"2026-10","label":"10 月","year":2026,"month":10,"finalized":false,"daysInMonth":31,"period":"10/1–10/2","baseline":7071.0,"baselineLabel":"9/30","end":7077.2,"endLabel":"10/2","totalKwh":6.2,"plugApp":2.01,"plugNote":"App 10 月累計","statFoot":"<b>樣本標準差</b>（n−1）；百分位數採線性內插（同 Excel PERCENTILE.INC）。","recFoot":"插頭以 App 10 月累計為準；殘差＝電表 − 插頭，代表熱水器與其他小電器（非冷氣）。10 月以 9 月結算讀數 7071.0 為基準。","dailyNote":"留白為尚未到來的日期。","cumNote":"虛線為全月預估（至今累計 ＋ 基準日均 × 剩餘天數）。","days":2,"records":[
+{"date":"2026-10-01","reading":7074.2,"room":3.2,"plug":1.04,"residual":2.16,"residualRaw":2.16,"clamped":false,"fee":16.0,"cumFee":16.0,"plugCumFee":5.2,"resCumFee":10.8,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7074.2−7071.0）；插頭 App 10 月累計 1.04"},
+{"date":"2026-10-02","reading":7077.2,"room":3.0,"plug":0.97,"residual":2.03,"residualRaw":2.03,"clamped":false,"fee":15.0,"cumFee":31.0,"plugCumFee":10.05,"resCumFee":20.95,"roomStatus":"measured","plugStatus":"exact","note":"實測（電表 7077.2−7074.2）；插頭 App 10 月累計 2.01"}
 ]}
 ]};
 const RATE=DATA.rate, MONTHS=DATA.months;
@@ -534,7 +535,7 @@ function insightsFor(){
     ];}
   const last=R[R.length-1],o=EST?EST.opts[assumeSel]:null,prevM=MONTHS[MONTHS.indexOf(M)-1],pST=prevM?STATS_ALL[prevM.key]:null;
   const items=[
-   ['bolt','--total',DAYS===1?`${M.label}開局：${last.md}`:`${M.label}至今 ${DAYS} 天`,DAYS===1?`${last.md} 用電 <b>${f2(last.room)} 度</b>（NT$${f1(last.fee)}）：冰箱＋風扇 ${f2(last.plug)}、熱水器＋小電 ${f2(last.residual)} 度。`:`共 <b>${f1(TOTAL)} 度</b>（NT$${f1(TOTAL*RATE)}），日均 ${f2(MEAN)} 度；最近一天 ${last.md} 為 ${f2(last.room)} 度。`],
+   ['bolt','--total',DAYS===1?`${M.label}開局：${last.md}`:`${M.label}至今 ${DAYS} 天`,DAYS===1?`${last.md} 用電 <b>${f2(last.room)} 度</b>（NT$${f1(last.fee)}）：冰箱＋風扇 ${f2(last.plug)}、熱水器＋小電 ${f2(last.residual)} 度。`:`共 <b>${f1(TOTAL)} 度</b>（NT$${f1(TOTAL*RATE)}），日均 ${f2(MEAN)} 度；冰箱＋風扇 ${f2(M.plugApp)}、熱水器＋小電 ${f2(RES_AUTH)} 度。最近一天 ${last.md} 為 ${f2(last.room)} 度（NT$${f1(last.fee)}）。`],
   ];
   if(o)items.push(['target','--total',`全月預估 NT$${f1(o.fee)}`,`＝至今 ${f1(TOTAL)} 度 ＋ ${o.t} <b>${f2(o.v)} 度</b> × 剩餘 ${EST.rem} 天 ≈ ${f1(o.kwh)} 度。${DAYS<7&&assumeSel==='recent7'?`本月僅 ${DAYS} 天資料，基準採最近 7 個電表實測日（${o.d.join('、')}），排除均分估算日與約略值。`:''}可在上方切換基準。`]);
   if(prevM){const pm=prevM.totalKwh/prevM.records.length,pa=pST.room.actual.mean,pr=(prevM.totalKwh-prevM.plugApp)/prevM.totalKwh*100;
