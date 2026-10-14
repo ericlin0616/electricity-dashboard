@@ -569,7 +569,7 @@ function renderRecords(){
   const mb=document.getElementById('moreBtn');mb.classList.toggle('hidden',R.length<=lim);mb.textContent=showAll?'收合':`顯示全部 ${R.length} 天`;mb.onclick=()=>{showAll=!showAll;renderRecords();};
   const COLS=[{k:'date',t:'日期',l:1,f:r=>`${r.md} <span style="color:var(--faint)">週${WD[r.wd]}</span>`},{k:'reading',t:'電表',f:r=>r.reading==null?'—':f1(r.reading),s:r=>r.reading??-1},
     {k:'room',t:'總用電',f:r=>f2(r.room)},{k:'plug',t:'冰箱＋風扇',f:r=>f2(r.plug)},{k:'residual',t:'熱水器＋小電',f:r=>f2(r.residual)},{k:'fee',t:'電費',f:r=>f1(r.fee)},{k:'cumFee',t:'累計',f:r=>f1(r.cumFee)},
-    {k:'roomStatus',t:'狀態',l:1,f:r=>tagFor(r)||'<span style="color:var(--faint);font-size:12px">實測</span>'},{k:'note',t:'備註',l:1,f:r=>`<span title="${(r.note||'').replace(/"/g,'"')}">${r.note||''}</span>`,c:'note'}];
+    {k:'roomStatus',t:'狀態',l:1,f:r=>tagFor(r)||'<span style="color:var(--faint);font-size:12px">實測</span>'},{k:'note',t:'備註',l:1,f:r=>`<span title="${(r.note||'').replace(/"/g,'\u0026quot;')}">${r.note||''}</span>`,c:'note'}];
   const col=COLS.find(c=>c.k===sortK),key=col.s||(r=>r[sortK]);
   const rows0=[...R].sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*sortDir;}),rows=showAll?rows0:rows0.slice(0,lim);
   document.getElementById('recTbl').innerHTML=`<thead><tr>${COLS.map(c=>`<th class="${c.l?'l':''}" data-k="${c.k}">${c.t}<span class="a">${c.k===sortK?(sortDir>0?'▲':'▼'):''}</span></th>`).join('')}</tr></thead><tbody class="num">${rows.map(r=>`<tr class="${r.est?'isest':''}">${COLS.map(c=>`<td class="${c.l?'l':''} ${c.c||''}">${c.f(r)}</td>`).join('')}</tr>`).join('')}</tbody>
